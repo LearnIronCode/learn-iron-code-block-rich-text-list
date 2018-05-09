@@ -4,8 +4,11 @@
  * Replace them with your own styles or remove the file completely.
  */
 
+.edit-post-visual-editor .wp-block-learn-iron-code-block-rich-text-list-iron-code-rich-text-list,
 .wp-block-learn-iron-code-block-rich-text-list-iron-code-rich-text-list {
-	background-color: #000;
+	background-color: #007fbc;
+	border: 5px solid #fff;
 	color: #fff;
-	padding: 2px;
+	outline: 5px solid #19a7d9;
+	padding: 10px 30px;
 }
