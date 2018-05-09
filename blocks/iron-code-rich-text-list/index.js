@@ -2,8 +2,16 @@
 	/**
 	 * Registers a new block provided a unique name and an object defining its behavior.
 	 * @see https://github.com/WordPress/gutenberg/tree/master/blocks#api
+	 *
+	 * RichText Renders a rich contenteditable input, providing users the option
+	 * to add emphasis to content or links to content. It behaves similarly to a
+	 * controlled component, except that onChange is triggered less frequently
+	 * than would be expected from a traditional input field, usually when the
+	 * user exits the field.
+	 * @see https://github.com/WordPress/gutenberg/tree/master/editor/components/rich-text
 	 */
-	var registerBlockType = wp.blocks.registerBlockType;
+	var registerBlockType = wp.blocks.registerBlockType,
+		RichText = wp.editor.RichText;
 	/**
 	 * Returns a new element of given type. Element is an abstraction layer atop React.
 	 * @see https://github.com/WordPress/gutenberg/tree/master/element#element
@@ -55,10 +63,25 @@
 		 * @return {Element}       Element to render.
 		 */
 		edit: function( props ) {
+			/**
+			 * Function to update "content" attribute.
+			 */
+			function onChangeContent( newContent ) {
+				props.setAttributes( { content: newContent } );
+			}
+
+			/**
+			 * Render our block for the editor using our content attribute in
+			 * a RichText component.
+			 */
 			return el(
-				'p',
-				{ className: props.className },
-				__( 'Hello from the editor!' )
+				RichText,
+				{
+					tagName: 'p',
+					className: props.className,
+					onChange: onChangeContent,
+					value: props.attributes.content
+				}
 			);
 		},
 
@@ -67,14 +90,22 @@
 		 * into the final markup, which is then serialized by Gutenberg into `post_content`.
 		 * @see https://wordpress.org/gutenberg/handbook/block-edit-save/#save
 		 *
+		 * @param {Object} [props] Properties passed from the editor.
 		 * @return {Element}       Element to render.
 		 */
-		save: function() {
-			return el(
-				'p',
-				{},
-				__( 'Hello from the saved content!' )
-			);
+		save: function( props ) {
+			/**
+			 * Render the markup to save in the database using the
+			 * RichText.Content component.  This handles of logic of things
+			 * like including <br/> between each element in the
+			 * props.attributes.content array.
+			 *
+			 * Note: Our className is automatically added to our element.
+			 */
+			return el( RichText.Content, {
+				tagName: 'p',
+				value: props.attributes.content
+			} );
 		}
 	} );
 } )(

@@ -53,10 +53,37 @@ function iron_code_rich_text_list_block_init() {
 		filemtime( "$dir/$style_css" )
 	);
 
+
+	/**
+	 * Attributes are the editable variables in our block.
+	 * Here we create one attribute called "content" (we could use any name here).
+	 *
+	 * When the editor is loaded, the attributes are populated by parsing the
+	 * block as it is stored in the database and extracting the values.
+	 * The "selector" indicates what element in our block contains the value.
+	 * The "source" indicates what part of the selected element to extract,
+	 * the most common is text (the content of the tag), however other parts of
+	 * the tag can be used (e.g. id, class, rel, href, src, alt).
+	 */
+	$attributes = array(
+		/**
+		 * This attribute will be an array, where each element in the
+		 * array represents a line in the <p> element.
+		 * Since we're using a RichText element in index.js it will
+		 * insert <br/> between each element by default.
+		 */
+		'content' => array(
+			'type'     => 'array',
+			'source'   => 'children',
+			'selector' => 'p',
+		),
+	);
+
 	register_block_type( 'learn-iron-code-block-rich-text-list/iron-code-rich-text-list', array(
 		'editor_script' => 'iron-code-rich-text-list-block-editor',
 		'editor_style'  => 'iron-code-rich-text-list-block-editor',
 		'style'         => 'iron-code-rich-text-list-block',
+		'attributes'    => $attributes,
 	) );
 }
 add_action( 'init', 'iron_code_rich_text_list_block_init' );
