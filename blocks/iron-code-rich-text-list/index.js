@@ -27,6 +27,12 @@
 		title: __( 'Iron Code RichText List' ),
 
 		/**
+		 * Add dashicon icon in Gutenberg block selector.
+		 * @see https://developer.wordpress.org/resource/dashicons/#welcome-learn-more
+		 */
+		icon: 'welcome-learn-more',
+
+		/**
 		 * Blocks are grouped into categories to help users browse and discover them.
 		 * The categories provided by core are `common`, `embed`, `formatting`, `layout` and `widgets`.
 		 */
