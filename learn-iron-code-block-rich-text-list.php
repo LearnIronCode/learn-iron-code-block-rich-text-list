@@ -12,4 +12,9 @@
  * @package         Learn_Iron_Code_Block_Rich_Text_List
  */
 
-// Your code starts here.
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
+include( plugin_dir_path( __FILE__ ) . 'blocks/iron-code-rich-text-list.php' );
