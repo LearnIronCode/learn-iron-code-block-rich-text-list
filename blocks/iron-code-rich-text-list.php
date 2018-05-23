@@ -68,14 +68,12 @@ function iron_code_rich_text_list_block_init() {
 	$attributes = array(
 		/**
 		 * This attribute will be an array, where each element in the
-		 * array represents a line in the <p> element.
-		 * Since we're using a RichText element in index.js it will
-		 * insert <br/> between each element by default.
+		 * array represents an <li> element in a <ul>.
 		 */
 		'content' => array(
 			'type'     => 'array',
 			'source'   => 'children',
-			'selector' => 'p',
+			'selector' => 'ul',
 		),
 	);
 

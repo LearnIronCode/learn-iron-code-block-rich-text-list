@@ -71,14 +71,15 @@
 			}
 
 			/**
-			 * Render our block for the editor using our content attribute in
-			 * a RichText component.
+			 * Render our block for the editor as ul/li using our content
+			 * attribute in a RichText component.
 			 */
 			return el(
 				RichText,
 				{
-					tagName: 'p',
+					tagName: 'ul',
 					className: props.className,
+					multiline: 'li',
 					onChange: onChangeContent,
 					value: props.attributes.content
 				}
@@ -95,15 +96,14 @@
 		 */
 		save: function( props ) {
 			/**
-			 * Render the markup to save in the database using the
-			 * RichText.Content component.  This handles of logic of things
-			 * like including <br/> between each element in the
-			 * props.attributes.content array.
-			 *
-			 * Note: Our className is automatically added to our element.
+			 * Render the markup using the RichText.Content component.
+			 * This handles of logic of things like wrapping each element in
+			 * props.attributes.content with an <li> and wrapping the entire
+			 * thing with a <ul>.
 			 */
 			return el( RichText.Content, {
-				tagName: 'p',
+				tagName: 'ul',
+				multiline: 'li',
 				value: props.attributes.content
 			} );
 		}
